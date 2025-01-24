@@ -2,25 +2,35 @@ services:
   odoo:
     image: odoo:18
     depends_on:
-      - db
+      db:
+        condition: service_healthy
     ports:
-      - ${PORT}
+      - ${PORT}:8069
     volumes:
       - odoo_data:/var/lib/odoo
     environment:
-      - HOST=db
+      - HOST=${PROJECT}_db
       - USER=${USER}
       - PASSWORD=${PASSWORD}
       - ADMIN_EMAIL=${ADMIN_EMAIL}
       - ADMNIN_PASSWORD=${ADMIN_PASSWORD}
   db:
     image: postgres:13
+    container_name: ${PROJECT}_db
     environment:
       - POSTGRES_DB=${DB_NAME}
       - POSTGRES_USER=${USER}
       - POSTGRES_PASSWORD=${PASSWORD}
     volumes:
       - db_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "${USER}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 volumes:
   odoo_data:
   db_data:
+networks:
+  saas_network:
+    external: true
