@@ -1,0 +1,26 @@
+services:
+  odoo:
+    image: odoo:18
+    depends_on:
+      - db
+    ports:
+      - ${PORT}
+    volumes:
+      - odoo_data:/var/lib/odoo
+    environment:
+      - HOST=db
+      - USER=${USER}
+      - PASSWORD=${PASSWORD}
+      - ADMIN_EMAIL=${ADMIN_EMAIL}
+      - ADMNIN_PASSWORD=${ADMIN_PASSWORD}
+  db:
+    image: postgres:13
+    environment:
+      - POSTGRES_DB=${DB_NAME}
+      - POSTGRES_USER=${USER}
+      - POSTGRES_PASSWORD=${PASSWORD}
+    volumes:
+      - db_data:/var/lib/postgresql/data
+volumes:
+  odoo_data:
+  db_data:
