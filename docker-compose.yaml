@@ -8,6 +8,7 @@ services:
       - "127.0.0.1:${PORT}:8069"
     volumes:
       - odoo-web-data:/var/lib/odoo
+      - ./config:/etc/odoo
     networks:
       - saas_network
     environment:
