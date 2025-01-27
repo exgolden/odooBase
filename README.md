@@ -19,3 +19,4 @@ For now im just doing aesthetic modifications for each client.
 - Need to configure the SaaS network:
 - No default user configured: ✅
 - No snapshot configured:
+- Add a logo to the login page
