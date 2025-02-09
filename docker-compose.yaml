@@ -1,22 +1,24 @@
 services:
   odoo:
-    container_name: odoo_${PROJECT}
+    container_name: odoo_test1
     image: odoo:17.0
     depends_on:
       - db
     ports:
-      - "127.0.0.1:${PORT}:8069"
+      - "127.0.0.1:8069:8069"
     volumes:
       - odoo-web-data:/var/lib/odoo
       - ./config:/etc/odoo
+      # - ./addons:/mnt/extra-addons
     networks:
       - saas_network
     environment:
-      - HOST=db_${PROJECT}
-      - USER=${USER}
-      - PASSWORD=${PASSWORD}
+      - HOST=db_test1
+      - USER=odoo
+      - PASSWORD=odooPassword
+    restart: always
   db:
-    container_name: db_${PROJECT}
+    container_name: db_test1
     image: postgres:15
     volumes:
       - odoo-db-data:/var/lib/postgresql/data/pgdata
@@ -24,9 +26,10 @@ services:
       - saas_network
     environment:
       - POSTGRES_DB=postgres
-      - POSTGRES_USER=${USER}
-      - POSTGRES_PASSWORD=${PASSWORD}
+      - POSTGRES_USER=odoo
+      - POSTGRES_PASSWORD=odooPassword
       - PGDATA=/var/lib/postgresql/data/pgdata
+    restart: always
 volumes:
   odoo-web-data:
   odoo-db-data:
