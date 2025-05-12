@@ -1,3 +1,4 @@
 .env
 .secret
 addons/
+config/odoo.conf

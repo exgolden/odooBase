@@ -1,0 +1,4 @@
+[options]
+proxy_mode = True
+admin_passwd = $pbkdf2-sha512$600000$aU1p7R0jZKw1JoQQIsRYqw$BwwbBjGr58PU5aiGnf62QCKqfDPS.xtNEi.1zMgdFK6LageFoeNhcgyQm5tQcM6uID9K/ab4PnW6FY4PO8fDNA
+
