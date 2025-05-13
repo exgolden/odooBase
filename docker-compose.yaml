@@ -1,20 +1,22 @@
 services:
-  odoo_test_2:
-    container_name: odoo_test_2
+  odoo_test_3:
+    container_name: odoo_test_3
     image: odoo:18.0
     depends_on:
-      - db
+      - db_test_3
     ports:
-      - "127.0.0.1:8069:8069"
+      - "127.0.0.1:8072:8069"
     volumes:
       - odoo-web-data:/var/lib/odoo
+      # - ./addons:/mnt/extra-addons    
       - ./config:/etc/odoo
     networks:
       - saas_network
     restart: always
+    command: odoo -c /etc/odoo/odoo.conf -d db_test_2 -i base
 
-  db_test_2:
-    container_name: db_test_2
+  db_test_3:
+    container_name: db_test_3
     image: postgres:15
     volumes:
       - odoo-db-data:/var/lib/postgresql/data/pgdata
